@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>Test animation</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width">
+        <script type="text/javascript" src="js/phaser.min.js"></script>
+        <style type="text/css">
+            body {
+                margin: 0;
+            }
+        </style>
+    </head>
+    <body>
+        <script type="text/javascript">
+            var game = new Phaser.Game(800, 270, Phaser.AUTO, '', {preload: preload, create: create, update: update});
+            function preload() {
+                                game.load.spritesheet('bomberExplode', 'assets/pics/ennemy-bomber-1-explode.png', 60, 40, 4);
+            }
+            function create() {
+                player = game.add.sprite(0, 0, 'bomberExplode');
+                cursors = game.input.keyboard.createCursorKeys();
+                player.animations.add('run');
+                player.animations.add('walk');
+                player.animations.stop('walk', false);
+            }
+            function update() {
+                if (cursors.right.isDown) {
+                    player.animations.play('run', 70, false);
+                }
+                else {
+                    player.animations.stop('walk', false);
+                }
+            }
+        </script>
+    </body>
+</html>
