@@ -1,12 +1,7 @@
 <!DOCTYPE html>
-<!--
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
--->
 <html>
     <head>
-        <title>Test animation</title>
+        <title>TestPhaser animation change before killing it</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width">
         <script type="text/javascript" src="js/phaser.min.js"></script>
@@ -18,25 +13,37 @@ and open the template in the editor.
     </head>
     <body>
         <script type="text/javascript">
-            var game = new Phaser.Game(800, 270, Phaser.AUTO, '', {preload: preload, create: create, update: update});
-            function preload() {
-                                game.load.spritesheet('bomberExplode', 'assets/pics/ennemy-bomber-1-explode.png', 60, 40, 4);
+
+            var game = new Phaser.Game(500, 500, Phaser.AUTO, '', {preload: preload, create: create, update: update});
+
+            function preload() {// Preloading the Sprite Sheets
+
+                game.load.spritesheet('bomber', 'assets/pics/enemy-bomber-1.png', 60, 40, 3);// Preloading a Sprite Sheet ('key', 'urlBase', width (px), height (px), frames )
+                game.load.spritesheet('bomberExplode', 'assets/pics/enemy-bomber-1-explode.png', 60, 40, 4);
+
             }
+
             function create() {
-                player = game.add.sprite(0, 0, 'bomberExplode');
-                cursors = game.input.keyboard.createCursorKeys();
-                player.animations.add('run');
-                player.animations.add('walk');
-                player.animations.stop('walk', false);
+
+                player = game.add.sprite(220, 230, 'bomber');// Creating the sprite using the Sprite Sheet bomber ( x, y, key (name of the Sprite Sheet) )
+                player.animations.add('blink');// Adding an animation ( 'key' )
+                player.animations.play('blink', 3, true);// Playing an animation ( 'key', frameRate, loop )
+                game.input.onDown.addOnce(explodeBomber, this);// To call the function explodeBomber() when clicking on the game area
+
             }
+
             function update() {
-                if (cursors.right.isDown) {
-                    player.animations.play('run', 70, false);
-                }
-                else {
-                    player.animations.stop('walk', false);
-                }
+
             }
+
+            function explodeBomber() {
+
+                player.loadTexture('bomberExplode', 0);// (('key', frame))
+                player.animations.add('explode');// Adding an animation ( 'key' )
+                player.animations.play('explode', 7, false, true);// ( 'key', frameRate, loop, killOnComplete)
+
+            }
+
         </script>
     </body>
 </html>
