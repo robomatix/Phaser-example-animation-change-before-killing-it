@@ -13,37 +13,35 @@
     </head>
     <body>
         <script type="text/javascript">
-
             var game = new Phaser.Game(500, 500, Phaser.AUTO, '', {preload: preload, create: create, update: update});
-
-            function preload() {// Preloading the Sprite Sheets
-
-                game.load.spritesheet('bomber', 'assets/pics/enemy-bomber-1.png', 60, 40, 3);// Preloading a Sprite Sheet ('key', 'urlBase', width (px), height (px), frames )
+            function preload() {
+                /**************************************/
+                /* Preloading the Sprite Sheets */
+                // Preloading a Sprite Sheet ('key', 'urlBase', width (px), height (px), frames )
+                game.load.spritesheet('bomber', 'assets/pics/enemy-bomber-1.png', 60, 40, 3);
                 game.load.spritesheet('bomberExplode', 'assets/pics/enemy-bomber-1-explode.png', 60, 40, 4);
-
             }
-
             function create() {
-
-                player = game.add.sprite(220, 230, 'bomber');// Creating the sprite using the Sprite Sheet bomber ( x, y, key (name of the Sprite Sheet) )
-                player.animations.add('blink');// Adding an animation ( 'key' )
-                player.animations.play('blink', 3, true);// Playing an animation ( 'key', frameRate, loop )
-                game.input.onDown.addOnce(explodeBomber, this);// To call the function explodeBomber() when clicking on the game area
-
+                // Creating the sprite using the Sprite Sheet bomber ( x, y, key (name of the Sprite Sheet) )
+                player = game.add.sprite(220, 230, 'bomber');
+                // Adding an animation ( 'key' )
+                player.animations.add('blink');
+                // Playing an animation ( 'key', frameRate, loop )
+                player.animations.play('blink', 3, true);
+                // To call the function explodeBomber() when clicking on the game area
+                game.input.onDown.addOnce(explodeBomber, this);
             }
-
             function update() {
-
+                // Necessary to make it work !
             }
-
             function explodeBomber() {
-
-                player.loadTexture('bomberExplode', 0);// (('key', frame))
-                player.animations.add('explode');// Adding an animation ( 'key' )
-                player.animations.play('explode', 7, false, true);// ( 'key', frameRate, loop, killOnComplete)
-
+                // To load the new texture (('key', frame))
+                player.loadTexture('bomberExplode', 0);
+                // Adding an animation ( 'key' )
+                player.animations.add('explode');
+                // To play the animation with the new texture ( 'key', frameRate, loop, killOnComplete)
+                player.animations.play('explode', 7, false, true);
             }
-
         </script>
         <h1>Click on the black square to destroy the ship / Cliquez sur le carré noir pour détruire le vaisseau</h1> 
     </body>
